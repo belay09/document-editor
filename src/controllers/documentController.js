@@ -88,7 +88,7 @@ const uploadDocument = asyncHandler(async (req, res) => {
 // @access  Private
 const viewDocument = asyncHandler(async (req, res) => {
   const document = await db('documents')
-    .where({ 'documents.id': req.params.id })
+    .where({ 'documents.id': req.params.id }) // Specify the table name for the 'id' column
     .join('users', 'documents.owner_id', 'users.id')
     .select(
       'documents.*',

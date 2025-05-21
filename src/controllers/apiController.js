@@ -78,9 +78,13 @@ const handleCallback = asyncHandler(async (req, res) => {
 const getEditorConfig = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const document = await db('documents')
-    .where({ id })
+    .where({ 'documents.id': id }) // Specify the table name for the 'id' column
     .join('users', 'documents.owner_id', 'users.id')
-    .select('documents.*', 'users.name as ownerName', 'users.email as ownerEmail')
+    .select(
+      'documents.*',
+      'users.name as ownerName',
+      'users.email as ownerEmail'
+    )
     .first();
 
   if (!document) {
@@ -127,7 +131,7 @@ const getEditorConfig = asyncHandler(async (req, res) => {
         name: req.session.user.name,
       },
     },
-    process.env.JWT_SECRET || 'fallback_secret',
+    process.env.JWT_SECRET || 'your_jwt_secret_key_here', // Ensure this matches the Document Server's JWT_SECRET
     { expiresIn: '1h' }
   );
 

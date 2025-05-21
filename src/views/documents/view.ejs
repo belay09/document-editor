@@ -189,8 +189,9 @@
     const headerHeight = document.querySelector('header')?.offsetHeight || 0;
     editor.style.height = `calc(100vh - ${headerHeight}px)`;
 
+    console.log('Document ID:', '<%= document.id %>'); // Debugging
     // Fetch editor config from the server
-    fetch('/api/config/<%= document._id %>')
+    fetch('/api/config/<%= document.id %>')
       .then(response => response.json())
       .then(config => {
         // Initialize OnlyOffice Document Editor
